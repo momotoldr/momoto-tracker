@@ -23,9 +23,11 @@ From a tag of this repo (there is no registry release):
 "@momotoldr/tracker": "git+https://github.com/momotoldr/momoto-tracker.git#v0.1.0"
 ```
 
-Use the `git+https` form. The `github:` shorthand can be recorded as an SSH URL in
-`package-lock.json`, which fails in CI where there is no SSH key. The package builds itself
-on install (`prepare`).
+npm records the dependency as `git+ssh://…` in `package-lock.json` whichever form you use;
+that's fine — for a public repo, `npm ci` falls back to HTTPS when there's no SSH key (as in
+CI). The package builds itself on install (`prepare`). npm 11.19+ warns that this script
+isn't approved; approve it in the consuming repo with
+`npm install-scripts approve @momotoldr/tracker` so a future npm can't skip it.
 
 ## Use
 
