@@ -1,6 +1,6 @@
 {
   "name": "@momotoldr/tracker",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Dependency-free event tracking for Momoto: page views, clicks and product events, batched or real-time.",
   "private": true,
   "type": "module",
