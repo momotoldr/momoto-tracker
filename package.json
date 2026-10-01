@@ -1,0 +1,96 @@
+{
+  "name": "@momotoldr/tracker",
+  "version": "0.0.1",
+  "description": "Dependency-free event tracking for Momoto: page views, clicks and product events, batched or real-time.",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/momotoldr/momoto-tracker.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "import": "./dist/plugins/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepare": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "size": "size-limit"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "size-limit": [
+    {
+      "name": "core",
+      "path": "dist/index.js",
+      "import": "*",
+      "limit": "7 KB",
+      "gzip": true
+    },
+    {
+      "name": "plugins",
+      "path": "dist/plugins/index.js",
+      "import": "*",
+      "limit": "2 KB",
+      "gzip": true
+    },
+    {
+      "name": "react",
+      "path": "dist/react/index.js",
+      "import": "*",
+      "ignore": [
+        "react"
+      ],
+      "limit": "1 KB",
+      "gzip": true
+    }
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@size-limit/preset-small-lib": "^14.1.0",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.13.0",
+    "happy-dom": "^20.14.5",
+    "prettier": "^3.9.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^7.18.4",
+    "size-limit": "^14.1.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3"
+  }
+}

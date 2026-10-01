@@ -1,0 +1,27 @@
+export { createTracker } from './core/createTracker'
+export type { PluginHost, Tracker, TrackerPlugin } from './core/types'
+export type {
+  BatchConfig,
+  BatchedEvents,
+  Classification,
+  ConsentConfig,
+  ContextValue,
+  EventConfig,
+  EventData,
+  EventMap,
+  EventOptions,
+  EventPayload,
+  EventType,
+  Identity,
+  InMemoryStorageInfo,
+  NetworkConfig,
+  QueueConfig,
+  QueuedEvent,
+  QueueInfo,
+  RetryConfig,
+  Scalar,
+  SessionConfig,
+  TrackerConfig,
+  TrackerMode,
+  TrackerResult,
+} from './types'
