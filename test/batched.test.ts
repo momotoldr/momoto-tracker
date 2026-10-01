@@ -1,6 +1,11 @@
+import { readFileSync } from 'node:fs'
+
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { SDK } from '../src/services/TransportService'
 import { BASE_URL, makeTracker, resetEnvironment, stubNetwork } from './helpers'
+
+const { version } = JSON.parse(readFileSync('./package.json', 'utf8')) as { version: string }
 
 beforeEach(async () => {
   await resetEnvironment()
@@ -63,7 +68,7 @@ describe('batched delivery', () => {
     const { identity } = { identity: tracker.getIdentity()! }
     expect(request.body).toMatchObject({
       source: 'test-app',
-      sdk: { name: 'momoto-tracker', version: '0.0.1' },
+      sdk: SDK,
       anon_id: identity.anonId,
       session_id: identity.sessionId,
       dropped: 0,
@@ -72,6 +77,10 @@ describe('batched delivery', () => {
     })
     expect(typeof request.body.sent_at).toBe('number')
     expect(request.body.events[0].event_id).toMatch(/^[0-9a-f-]{14}7/)
+  })
+
+  it('reports the package version as the SDK version', () => {
+    expect(SDK).toEqual({ name: 'momoto-tracker', version })
   })
 
   it('drops undefined and non-scalar props', async () => {
