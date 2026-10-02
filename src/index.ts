@@ -23,5 +23,6 @@ export type {
   SessionConfig,
   TrackerConfig,
   TrackerMode,
+  TrackedEvent,
   TrackerResult,
 } from './types'

@@ -182,4 +182,21 @@ export interface TrackerConfig<E extends EventMap = EventMap> {
   context?: () => Record<string, ContextValue>
   /** `console.debug` every event and decision. */
   debug?: boolean
+  /**
+   * Called once for every event the tracker accepts — from `track()` and from plugins
+   * alike — just before it is queued or sent. For logging or mirroring events; it must not
+   * throw (a throw is caught and ignored) and must not be slow. Not called for events the
+   * tracker drops (disabled, opted out, sampled out, destroyed).
+   */
+  onTrack?: (event: TrackedEvent) => void
+}
+
+/** What `onTrack` receives. */
+export interface TrackedEvent {
+  name: string
+  data: Record<string, Scalar>
+  eventId: string
+  mode: TrackerMode
+  type: EventType | null
+  sessionId: string
 }

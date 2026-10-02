@@ -176,3 +176,38 @@ describe('batched delivery', () => {
     expect(net.requests).toHaveLength(1)
   })
 })
+
+describe('onTrack', () => {
+  it('sees every accepted event, from track() and from plugins, and can not break tracking', async () => {
+    const net = stubNetwork()
+    const seen: string[] = []
+    const { createTracker } = await import('../src')
+    const { pageViews } = await import('../src/plugins')
+    const tracker = createTracker<{ shot_taken: { index: number } }>({
+      event: { source: 'test-app' },
+      network: { baseUrl: BASE_URL },
+      onTrack: (e) => {
+        seen.push(`${e.name}:${e.type ?? '-'}:${e.mode}`)
+        throw new Error('a broken hook must not stop tracking')
+      },
+    })
+    tracker.use(pageViews({ normalize: (p) => p }))
+    await tracker.track('shot_taken', { index: 1 })
+    await vi.runAllTimersAsync()
+    expect(seen).toEqual(['page_view:-:BATCHED', 'shot_taken:-:BATCHED'])
+    expect(net.sentEvents.map((e) => e.event_name)).toEqual(['page_view', 'shot_taken'])
+  })
+
+  it('is not called when tracking is off', async () => {
+    const seen: string[] = []
+    const { createTracker } = await import('../src')
+    const tracker = createTracker<{ x: { a: number } }>({
+      event: { source: 'test-app' },
+      network: { baseUrl: BASE_URL },
+      consent: { enabled: false },
+      onTrack: (e) => seen.push(e.name),
+    })
+    await tracker.track('x', { a: 1 })
+    expect(seen).toEqual([])
+  })
+})

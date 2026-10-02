@@ -134,6 +134,17 @@ export class EventTracker<E extends EventMap> implements Tracker<E> {
         retryCount: 0,
       }
       this.log('track', name, eventPayload.data, mode)
+      if (this.config.onTrack) {
+        const tracked = {
+          name,
+          data: eventPayload.data,
+          eventId: event.id,
+          mode,
+          type: eventType,
+          sessionId,
+        }
+        this.safely(() => this.config.onTrack!(tracked))
+      }
 
       if (mode === 'REAL_TIME') return await this.realTime().track(event)
       this.batched().track(event)

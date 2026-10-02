@@ -102,21 +102,22 @@ Global Privacy Control, the user opted out, or this visit is sampled out.
 
 ### Options
 
-| option                                 | default                                              |                                                                                |
-| -------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `event.mode`                           | `'BATCHED'`                                          | or `'REAL_TIME'`; per event via `event.classification` or `track(…, { mode })` |
-| `network.endpoints`                    | `{ single: '/v1/e', batch: '/v1/b' }`                |                                                                                |
-| `network.timeout`                      | `5000`                                               | ms                                                                             |
-| `network.retries`                      | `{ maxRetries: 2, baseDelay: 1000, maxDelay: 8000 }` | exponential backoff with full jitter; 5xx, 408, 429 and network errors only    |
-| `batch.maxBatchSize`                   | `20`                                                 |                                                                                |
-| `batch.maxWaitTime`                    | `10000`                                              | ms a lone event waits for company                                              |
-| `batch.flushingTimeout`                | `3000`                                               | ms `flush()` / `destroy()` may take                                            |
-| `batch.storage.queue.maxQueueSize`     | `1000`                                               | events; the oldest are dropped first, and counted                              |
-| `batch.storage.queue.maxMemorySize`    | `2`                                                  | MB                                                                             |
-| `batch.storage.queue.persistToSession` | `false`                                              | survive a reload                                                               |
-| `session.idleTimeoutMs`                | `1800000`                                            | 30 minutes                                                                     |
-| `consent.respectDnt`                   | `true`                                               |                                                                                |
-| `consent.sampleRate`                   | `1`                                                  | share of visits tracked                                                        |
+| option                                 | default                                              |                                                                                               |
+| -------------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `event.mode`                           | `'BATCHED'`                                          | or `'REAL_TIME'`; per event via `event.classification` or `track(…, { mode })`                |
+| `network.endpoints`                    | `{ single: '/v1/e', batch: '/v1/b' }`                |                                                                                               |
+| `network.timeout`                      | `5000`                                               | ms                                                                                            |
+| `network.retries`                      | `{ maxRetries: 2, baseDelay: 1000, maxDelay: 8000 }` | exponential backoff with full jitter; 5xx, 408, 429 and network errors only                   |
+| `batch.maxBatchSize`                   | `20`                                                 |                                                                                               |
+| `batch.maxWaitTime`                    | `10000`                                              | ms a lone event waits for company                                                             |
+| `batch.flushingTimeout`                | `3000`                                               | ms `flush()` / `destroy()` may take                                                           |
+| `batch.storage.queue.maxQueueSize`     | `1000`                                               | events; the oldest are dropped first, and counted                                             |
+| `batch.storage.queue.maxMemorySize`    | `2`                                                  | MB                                                                                            |
+| `batch.storage.queue.persistToSession` | `false`                                              | survive a reload                                                                              |
+| `session.idleTimeoutMs`                | `1800000`                                            | 30 minutes                                                                                    |
+| `consent.respectDnt`                   | `true`                                               |                                                                                               |
+| `consent.sampleRate`                   | `1`                                                  | share of visits tracked                                                                       |
+| `onTrack`                              | —                                                    | called for every accepted event (name, data, id, mode, type, visit), e.g. to `console.log` it |
 
 ## What is sent
 
